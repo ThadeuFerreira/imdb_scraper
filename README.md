@@ -16,7 +16,7 @@ The scraper extracts the following information about each movie:
 
 The scraper can be run from the command line by running the `imdb_scraper.py` file. 
 
-Adjust the following parameters in the `config.py` file to scrape the desired number of movies:
+Adjust the following parameters in the `.env` file to scrape the desired number of movies:
 
 - START_ID : The ID of the first movie to scrape
 - END_ID  : The ID of the last movie to scrape

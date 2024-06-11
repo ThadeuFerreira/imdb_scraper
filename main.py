@@ -5,11 +5,30 @@ from aiohttp import ClientSession
 from bs4 import BeautifulSoup
 import pandas as pd
 from typing import List
+#Load variables from .env file
+from dotenv import load_dotenv
+import os
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
 }
 
+load_dotenv()
+
+START_ID = os.getenv("START_ID")
+if START_ID is None:
+    START_ID = 1
+END_ID = os.getenv("END_ID")
+if END_ID is None:
+    END_ID = 100
+BATCH_SIZE = os.getenv("BATCH_SIZE")
+if BATCH_SIZE is None:
+    BATCH_SIZE = 10
+
+# Define a semaphore with a specific limit for concurrent requests
+SEM_LIMIT = os.getenv("SEM_LIMIT")  # Adjust this value based on your requirements and server limits
+if SEM_LIMIT is None:
+    SEM_LIMIT = 10
 
 async def fetch_movie_info(session, movie_url, semaphore):
     async with semaphore:
@@ -148,12 +167,7 @@ def generate_movies_id(start, batch_size) -> List[str]:
         l.append(s + str(i).zfill(7))
     return l
 
-START_ID = 1
-END_ID = 1_000_000
-BATCH_SIZE = 100
 
-# Define a semaphore with a specific limit for concurrent requests
-SEM_LIMIT = 100  # Adjust this value based on your requirements and server limits
 
 async def get_data():
     semaphore = asyncio.Semaphore(SEM_LIMIT)
