@@ -1,4 +1,4 @@
-##IMDB Scraper
+IMDB Scraper
 
 This is a simple web scraper that scrapes movies from IMDB and stores them in a CSV file. 
 The scraper uses the BeautifulSoup library to parse the HTML content of the IMDB website and extract the relevant information about the movies.
